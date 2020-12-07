@@ -1,5 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, session, logging, requests
-from wtforms import From, StringField, TextAreaField, PasswordField, validators
+from flask import Flask, render_template, redirect, url_for, session, logging
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators
 from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
@@ -8,7 +8,16 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/register')
+class RegisterForm(Form):
+    username = StringField('Username', [validators.length(min=4, max=25)])
+    email = StringField('Email', [validators.length(min=4, max=25)])
+    password = PasswordField('Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords do not match')
+    ])
+    confirm = PasswordField('Confirm password')
+
+@app.route('/register', methods=['GET','POST'])
 def register():
     return render_template('register.html')
 

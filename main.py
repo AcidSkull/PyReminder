@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, session, logging
 from flask.globals import request
 import sqlalchemy
+from sqlalchemy.sql.elements import Null
 from wtforms import Form, StringField, PasswordField, validators, BooleanField
 from passlib.hash import sha256_crypt
 from flask_sqlalchemy import SQLAlchemy
@@ -12,6 +13,12 @@ db = SQLAlchemy(app)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(25), nullable=False)
+    password = db.Column(db.String(77), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
 
 class RegisterForm(Form):
     username = StringField('Username', [validators.length(min=4, max=25)])
@@ -30,6 +37,11 @@ def register():
         username = form.username.data
         email = form.email.data
         password = sha256_crypt.encrypt(str(form.password.data))
+
+        user = Users(username=username,password=password,email=email)
+        db.session.add(user)
+        db.session.commit()
+
         return render_template('thanks.html')
 
     return render_template('register.html', form=form)

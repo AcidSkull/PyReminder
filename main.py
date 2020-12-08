@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, session, logging
 from flask.globals import request
-from wtforms import Form, StringField, TextAreaField, PasswordField, validators
+from wtforms import Form, StringField, TextAreaField, PasswordField, validators, BooleanField
 from passlib.hash import sha256_crypt
 
 app = Flask(__name__)
@@ -17,14 +17,15 @@ class RegisterForm(Form):
         validators.EqualTo('confirm', message='Passwords do not match')
     ])
     confirm = PasswordField('Confirm password')
+    accepted_rules = BooleanField("I accpeted the terms of use",[validators.required()])
 
 @app.route('/register', methods=['GET','POST'])
 def register():
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
-        pass
+        username = form.data.username
 
-    return render_template('register.html')
+    return render_template('register.html', form=form)
 
     
 if __name__ == "__main__":

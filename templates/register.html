@@ -6,6 +6,31 @@
 {% block body %}
     <h2>Register</h2>
     <form action="" method="post">
+        {{ form.username.label }}<br>{{ form.username() }} <br>
+        {% if form.username.errors %}
+            {% for error in form.username.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+        {% endif %}
 
+        {{ form.email.label }}<br>{{ form.email() }} <br>
+        {% if form.email.errors %}
+            {% for error in form.email.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+        {% endif %}
+        
+        {{ form.password.label }}<br>{{ form.password() }} <br>
+        {% if form.password.errors %}
+            {% for error in form.password.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+        {% endif %}
+
+        {{ form.confirm.label }}<br>{{ form.confirm() }} <br>
+        {% if form.confirm.errors %}
+            {% for error in form.confirm.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+        {% endif %}
+
+        {{ form.accepted_rules() }} {{ form.accepted_rules.label }}<br>
+        {% if form.accepted_rules.errors %}
+            {% for error in form.accepted_rules.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+        {% endif %}
+        
+        <input type="submit" value="Sign up">
     </form>
 {% endblock %}

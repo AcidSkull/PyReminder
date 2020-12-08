@@ -1,14 +1,16 @@
 from flask import Flask, render_template, redirect, url_for, session, logging
 from flask.globals import request
-import sqlalchemy
-from sqlalchemy.sql.elements import Null
 from wtforms import Form, StringField, PasswordField, validators, BooleanField
 from passlib.hash import sha256_crypt
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 @app.route('/')
 def index():

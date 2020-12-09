@@ -4,13 +4,23 @@ from wtforms import Form, StringField, PasswordField, validators, BooleanField
 from passlib.hash import sha256_crypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from markupsafe import escape
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 db = SQLAlchemy(app)
 
-# login_manager = LoginManager()
-# login_manager.init_app(app)
+with open('secret.json') as f:
+    data = json.load(f)
+
+app.secret_key = data['secret_key']
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+@login_manager.user_loader
+def load_user(user_id):
+    pass
 
 @app.route('/')
 def index():
@@ -21,6 +31,19 @@ class Users(db.Model):
     username = db.Column(db.String(25), nullable=False)
     password = db.Column(db.String(77), nullable=False)
     email = db.Column(db.String(100), nullable=False)
+
+class LoginForm(Form):
+    username = StringField('Username', [validators.length(min=4, max=25)])
+    password = PasswordField('Password', [
+        validators.DataRequired()
+    ])
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    form = LoginForm()
+
+    return render_template('login.html', form=form)
+
 
 class RegisterForm(Form):
     username = StringField('Username', [validators.length(min=4, max=25)])

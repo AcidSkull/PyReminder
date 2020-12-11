@@ -7,12 +7,9 @@
     <h2>Login</h2>
     <form method="post">
         {{ form.username.label }}<br>{{ form.username() }} <br>
-        {% if form.username.errors %}
-            {% for error in form.username.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
-        {% endif %}
         {{ form.password.label }}<br>{{ form.password() }} <br>
-        {% if form.password.errors %}
-            {% for error in form.password.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+        {% if error %}
+            <span style="color:red">{{ error }}</span> <br>
         {% endif %}
         <input type="submit" value="Sign in">
     </form>

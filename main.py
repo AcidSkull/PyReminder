@@ -57,12 +57,18 @@ def login():
     if request.method == 'POST':
         username = form.username.data
         password = generate_password_hash(form.password.data, method='sha256')
+        error = 'Bad username or password!'
 
-        data = Users.query.filter_by(username=username).first()
-        pwhash = data.password
+        try:
+            data = Users.query.filter_by(username=username).first()
+            pwhash = data.password
+        except:
+            return render_template('login.html', form=form,error=error)
         if data is not None:
             if check_password_hash(pwhash, form.password.data):
                 return redirect(url_for('index'))
+        
+        return render_template('login.html', form=form,error=error)
 
     return render_template('login.html', form=form)
 

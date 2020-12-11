@@ -58,9 +58,11 @@ def login():
         username = form.username.data
         password = generate_password_hash(form.password.data, method='sha256')
 
-        data = Users.query.filter_by(username=username,password=password)
+        data = Users.query.filter_by(username=username).first()
+        pwhash = data.password
         if data is not None:
-            return redirect(url_for('index'))
+            if check_password_hash(pwhash, form.password.data):
+                return redirect(url_for('index'))
 
     return render_template('login.html', form=form)
 

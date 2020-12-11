@@ -1,4 +1,3 @@
-from enum import unique
 from flask import Flask, render_template, redirect, url_for, session, logging
 from flask.globals import request
 from flask.helpers import flash
@@ -7,61 +6,66 @@ from wtforms import Form, StringField, PasswordField, validators, BooleanField
 from passlib.hash import sha256_crypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import LoginManager, login_user
+from flask_bcrypt import bcrypt
 from markupsafe import escape
-import json
+from flask_wtf import FlaskForm
+import os, sqlite3
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.secret_key = os.urandom(16)
 db = SQLAlchemy(app)
 
-with open('secret.json') as f:
-    data = json.load(f)
+class Users(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(25), nullable=False, unique=True)
+    password = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
 
-app.secret_key = data['secret_key']
+    def __init__(self,id,username,password,email):
+        self.id = id
+        self.username = username
+        self.password = password
+        self.email = email
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = 'login'
+
 @login_manager.user_loader
 def load_user(user_id):
-    return Users.query.get(id)
+    return Users.query.get(int(user_id))
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(25), nullable=False, unique=True)
-    password = db.Column(db.String(77), nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-
-class LoginForm(Form):
-    username = StringField('Username', [validators.length(min=4, max=25)])
+class LoginForm(FlaskForm):
+    username = StringField('Login')
     password = PasswordField('Password', [
         validators.DataRequired()
     ])
-
-class User(UserMixin,db.Model):
-    __tablename__ = 'Users'
-    user_id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String)
-    email = db.Column(db.String)
-    password = db.Column(db.String)
 
 
 
 @app.route('/login',methods=['GET','POST'])
 def login():
     form = LoginForm()
-    # if form.validate_on_submit():
-    #     user = User.query.get(form.username.data)
 
+    if request.method == 'POST':
+        username = form.username.data
+        password = generate_password_hash(form.password.data, method='sha256')
 
+        data = Users.query.filter_by(username=username,password=password)
+        if data is not None:
+            return redirect(url_for('index'))
 
     return render_template('login.html', form=form)
 
 
-class RegisterForm(Form):
+class RegisterForm(FlaskForm):
     username = StringField('Username', [validators.length(min=4, max=25)])
     email = StringField('Email', [validators.length(min=4, max=25)])
     password = PasswordField('Password', [
@@ -77,7 +81,7 @@ def register():
     if request.method == 'POST' and form.validate():
         username = form.username.data
         email = form.email.data
-        password = sha256_crypt.encrypt(str(form.password.data))
+        password = generate_password_hash(form.password.data, method='sha256')
 
         user = Users(username=username,password=password,email=email)
 

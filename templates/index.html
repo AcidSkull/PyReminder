@@ -5,8 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    <div id="logo"><h1><span style="color: #FFE873">Py</span><span style="color: #306998">Reminder</span></h1></div>
     <div id="main">
-    PyReminder is a tool that's allow you to never forget about your's important plans. <br>
-    <a href="{{ url_for('register') }}">Start now</a>
+    <div id="logo"><h1><span style="color: #FFE873">Py</span><span style="color:#4B8BBE">Reminder</span></h1></div>
+    {% if current_user.is_authenticated %}
+        Welcome {{ current_user.username }}! 
+    {% else %}
+        PyReminder is a tool that's allow you to never forget about your's important plans. <br>
+        <a href="{{ url_for('register') }}">Register now</a> or <a href="{{ url_for('login') }}">log to existing accoutn!</a>      
+    {% endif %}
 {% endblock %}

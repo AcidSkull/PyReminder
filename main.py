@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, session, logging
 from flask.globals import request
 from flask.helpers import flash
 from flask_login.mixins import UserMixin
-from flask_login.utils import login_required
+from flask_login.utils import login_required, logout_user
 from wtforms import Form, StringField, PasswordField, validators, BooleanField
 from passlib.hash import sha256_crypt
 from flask_sqlalchemy import SQLAlchemy
@@ -72,6 +72,12 @@ def login():
         return render_template('login.html', form=form,error=error)
 
     return render_template('login.html', form=form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 class RegisterForm(FlaskForm):

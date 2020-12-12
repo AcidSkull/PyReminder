@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'Reminder/style.css' %}">
+    <title>PyReminder</title>
+</head>
+<body>
+    <div id="logo"><h1><span style="color: #FFE873">Py</span><span style="color: #306998">Reminder</span></h1></div>
+    <div id="main">
+        PyReminder is a tool that's allow you to never forget about your's important plans. <br>
+        <a href="{% url 'register' %}">Start now</a>
+    </div>
+</body>
+</html>

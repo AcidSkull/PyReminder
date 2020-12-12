@@ -2,16 +2,16 @@ from flask import Flask, render_template, redirect, url_for, session, logging
 from flask.globals import request
 from flask.helpers import flash
 from flask_login.mixins import UserMixin
+from flask_login.utils import login_required
 from wtforms import Form, StringField, PasswordField, validators, BooleanField
 from passlib.hash import sha256_crypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import LoginManager, login_user
-from flask_bcrypt import bcrypt
+from flask_login import LoginManager, login_user, current_user
 from markupsafe import escape
 from flask_wtf import FlaskForm
-import os, sqlite3
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -66,6 +66,7 @@ def login():
             return render_template('login.html', form=form,error=error)
         if data is not None:
             if check_password_hash(pwhash, form.password.data):
+                login_user(data)
                 return redirect(url_for('index'))
         
         return render_template('login.html', form=form,error=error)
@@ -106,6 +107,5 @@ def register():
 
     return render_template('register.html', form=form)
 
-    
 if __name__ == "__main__":
     app.run(debug=True)

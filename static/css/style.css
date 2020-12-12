@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@700&display=swap');
+
+body{
+    background-color: #4B8BBE;
+}
+
+#main{
+    background-color: red;
+}
+
+#logo{
+    font-family: 'Goldman', cursive;
+}

@@ -49,10 +49,12 @@ def load_user(user_id):
 class AdTaskForm(FlaskForm):
     title = StringField('Title', [validators.length(min=4, max=45)])
     description = StringField('Description', [validators.length(min=4, max=255)])
+    term = DateField('Date', [validators.required()])
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    form = AdTaskForm()
+    return render_template('index.html', form=form)
 
 class LoginForm(FlaskForm):
     username = StringField('Login')
@@ -68,7 +70,6 @@ def login():
 
     if request.method == 'POST':
         username = form.username.data
-        password = generate_password_hash(form.password.data, method='sha256')
         error = 'Bad username or password!'
 
         try:

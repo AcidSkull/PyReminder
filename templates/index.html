@@ -18,7 +18,17 @@
             <input type="submit" value="Add Task">
         </form>
         <div id="list">
-
+            {% if tasks.count() == 0 %}
+                There's nothing to remind you.
+            {% else %}         
+                {% for task in tasks %}
+                    <div class="task">
+                        <h4>{{ task.title }}</h4>
+                        {{ task.description }} <br>
+                        {{ task.termDate }} {{ task.termTime}}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     {% else %}
         PyReminder is a tool that's allow you to never forget about your's important plans. <br>

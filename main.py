@@ -56,6 +56,10 @@ class AdTaskForm(FlaskForm):
 @app.route('/')
 def index():
     form = AdTaskForm()
+    if current_user.is_authenticated:
+        query = TaskToDo.query.filter_by(user_id=current_user.id)
+        return render_template('index.html', form=form, tasks=query)
+
     return render_template('index.html', form=form)
 
 class LoginForm(FlaskForm):

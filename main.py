@@ -1,15 +1,14 @@
-from flask import Flask, render_template, redirect, url_for, session, logging
+from flask import Flask, render_template, redirect, url_for
 from flask.globals import request
 from flask.helpers import flash
 from flask_login.mixins import UserMixin
 from flask_login.utils import login_required, logout_user
-from wtforms import Form, StringField, PasswordField, validators, BooleanField
-from passlib.hash import sha256_crypt
+from sqlalchemy.sql.schema import ForeignKey
+from wtforms import StringField, PasswordField, validators, BooleanField, DateField
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, login_user, current_user
-from markupsafe import escape
 from flask_wtf import FlaskForm
 import os
 
@@ -30,6 +29,15 @@ class Users(UserMixin,db.Model):
         self.password = password
         self.email = email
 
+class TaskToDo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(45), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+    term = db.Column(db.Date, nullable=False)
+    method = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, nullable=False, foreign_key=True)
+    done = db.Column(db.Boolean, nullable=False)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -37,6 +45,10 @@ login_manager.login_view = 'login'
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
+
+class AdTaskForm(FlaskForm):
+    title = StringField('Title', [validators.length(min=4, max=45)])
+    description = StringField('Description', [validators.length(min=4, max=255)])
 
 @app.route('/')
 def index():
@@ -112,6 +124,10 @@ def register():
         return render_template('thanks.html')
 
     return render_template('register.html', form=form)
+
+@app.route('/addTask', methods=['POST'])
+def addTask():
+    pass
 
 if __name__ == "__main__":
     app.run(debug=True)

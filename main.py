@@ -3,8 +3,8 @@ from flask.globals import request
 from flask.helpers import flash
 from flask_login.mixins import UserMixin
 from flask_login.utils import login_required, logout_user
-from sqlalchemy.sql.schema import ForeignKey
-from wtforms import StringField, PasswordField, validators, BooleanField, DateField
+from wtforms import StringField, PasswordField, validators, BooleanField
+from wtforms.fields.html5 import DateField, TimeField
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -33,7 +33,8 @@ class TaskToDo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(45), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    term = db.Column(db.Date, nullable=False)
+    termDate = db.Column(db.String, nullable=False)
+    termTime = db.Column(db.String, nullable=False)
     method = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, nullable=False, foreign_key=True)
     done = db.Column(db.Boolean, nullable=False)
@@ -49,7 +50,8 @@ def load_user(user_id):
 class AdTaskForm(FlaskForm):
     title = StringField('Title', [validators.length(min=4, max=45)])
     description = StringField('Description', [validators.length(min=4, max=255)])
-    term = DateField('Date', [validators.required()])
+    termDate = DateField('Date', format='%Y-%m-%d')
+    termTime = TimeField('Time', format='%H:%M:%S')
 
 @app.route('/')
 def index():
@@ -127,8 +129,18 @@ def register():
     return render_template('register.html', form=form)
 
 @app.route('/addTask', methods=['POST'])
+@login_required
 def addTask():
-    pass
+    form = AdTaskForm(request.form)
+    try:
+        Task = TaskToDo(title=form.title.data, description=form.description.data, 
+        termDate=form.termDate.data, termTime=form.termTime.raw_data[0], 
+        method=0, user_id=current_user.id, done=0)
+        db.session.add(Task)
+        db.session.commit()
+        return redirect(url_for('index'))
+    except:
+        return 'There was a problem with adding your task!'
 
 if __name__ == "__main__":
     app.run(debug=True)

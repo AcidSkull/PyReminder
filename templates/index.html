@@ -13,7 +13,8 @@
         <form action="{{ url_for('addTask') }}" method="post">
             {{ form.title.label }} {{ form.title() }} <br>
             {{ form.description.label }} {{ form.description() }} <br>
-            {{ form.term.label }} {{ form.term() }} <br>
+            {{ form.termDate.label }} {{ form.termDate() }} <br>
+            {{ form.termTime.label }} {{ form.termTime() }} <br>
             <input type="submit" value="Add Task">
         </form>
         <div id="list">
@@ -21,6 +22,6 @@
         </div>
     {% else %}
         PyReminder is a tool that's allow you to never forget about your's important plans. <br>
-        <a href="{{ url_for('register') }}">Register now</a> or <a href="{{ url_for('login') }}">log to existing accoutn!</a>      
+        <a href="{{ url_for('register') }}">Register now</a> or <a href="{{ url_for('login') }}">log to existing accoutn!</a>   
     {% endif %}
 {% endblock %}

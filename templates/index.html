@@ -11,10 +11,10 @@
         Welcome {{ current_user.username }}! 
         <a href="{{ url_for('logout') }}">Logout</a> <br>
         <form action="{{ url_for('addTask') }}" method="post">
-            {{ form.title.label }} {{ form.title() }} <br>
-            {{ form.description.label }} {{ form.description() }} <br>
-            {{ form.termDate.label }} {{ form.termDate() }} <br>
-            {{ form.termTime.label }} {{ form.termTime() }} <br>
+            {{ form.title.label }}<br>{{ form.title() }} <br>
+            {{ form.description.label }}<br>{{ form.description() }} <br>
+            {{ form.termDate.label }}<br>{{ form.termDate() }} <br>
+            {{ form.termTime.label }}<br>{{ form.termTime() }} <br>
             <input type="submit" value="Add Task">
         </form>
         <div id="list">

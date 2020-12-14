@@ -4,7 +4,7 @@ from flask.helpers import flash
 from flask_login.mixins import UserMixin
 from flask_login.utils import login_required, logout_user
 from sqlalchemy.orm import query
-from wtforms import StringField, PasswordField, validators, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, validators, BooleanField, SubmitField, TextAreaField
 from wtforms.fields.html5 import DateField, TimeField
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -50,7 +50,7 @@ def load_user(user_id):
 
 class AdTaskForm(FlaskForm):
     title = StringField('Title', [validators.length(min=4, max=45)])
-    description = StringField('Description', [validators.length(min=4, max=255)])
+    description = TextAreaField('Description', [validators.length(min=4, max=255)])
     termDate = DateField('Date', format='%Y-%m-%d')
     termTime = TimeField('Time', format='%H:%M:%S')
 
@@ -147,15 +147,15 @@ def register():
 @login_required
 def addTask():
     form = AdTaskForm(request.form)
-    try:
-        Task = TaskToDo(title=form.title.data, description=form.description.data, 
-        termDate=form.termDate.data, termTime=form.termTime.raw_data[0], 
-        method=0, user_id=current_user.id, done=0)
-        db.session.add(Task)
-        db.session.commit()
-        return redirect(url_for('index'))
-    except:
-        return 'There was a problem with adding your task!'
+    # try:
+    Task = TaskToDo(title=form.title.data, description=form.description.data, 
+    termDate=form.termDate.data, termTime=form.termTime.raw_data[0],
+    method=0, user_id=current_user.id, done=0)
+    db.session.add(Task)
+    db.session.commit()
+    return redirect(url_for('index'))
+    # except:
+        # return 'There was a problem with adding your task!'
 
 if __name__ == "__main__":
     app.run(debug=True)

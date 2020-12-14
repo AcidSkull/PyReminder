@@ -6,7 +6,15 @@
 {% block body %}
     <h2>Register</h2>
     <form action="" method="post">
+        {{ form.csrf_token }}
+
         {{ form.username.label }}<br>{{ form.username() }} <br>
+        {% with message = get_flashed_message %}
+            {% if message %}
+            <span style="color:red">{{ message }}</span><br>
+            {% endif %}
+        {% endwith %}
+
         {% if form.username.errors %}
             {% for error in form.username.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
         {% endif %}
@@ -31,6 +39,6 @@
             {% for error in form.accepted_rules.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
         {% endif %}
         
-        <input type="submit" value="Sign up">
+        {{ form.submit() }}>
     </form>
 {% endblock %}

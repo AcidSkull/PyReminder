@@ -3,7 +3,7 @@ from flask.globals import request
 from flask.helpers import flash
 from flask_login.mixins import UserMixin
 from flask_login.utils import login_required, logout_user
-from wtforms import StringField, PasswordField, validators, BooleanField
+from wtforms import StringField, PasswordField, validators, BooleanField, SubmitField
 from wtforms.fields.html5 import DateField, TimeField
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -98,37 +98,43 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/thanks')
+def thanks():
+    return render_template('thanks.html')
+
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', [validators.length(min=4, max=25)])
-    email = StringField('Email', [validators.length(min=4, max=25)])
+    email = StringField('Email', [validators.length(min=4, max=45)])
     password = PasswordField('Password', [
-        validators.DataRequired(),
+        validators.DataRequired()
+    ])
+    confirm = PasswordField('Confirm password', [
         validators.EqualTo('confirm', message='Passwords do not match')
     ])
-    confirm = PasswordField('Confirm password')
     accepted_rules = BooleanField("I accpeted the terms of use",[validators.DataRequired()])
+    submit = SubmitField('Sign up')
 
 @app.route('/register', methods=['GET','POST'])
 def register():
     form = RegisterForm(request.form)
-    if request.method == 'POST' and form.validate():
+    if form.validate_on_submit():
         username = form.username.data
         email = form.email.data
         password = generate_password_hash(form.password.data, method='sha256')
 
-        user = Users(username=username,password=password,email=email)
+        user = Users(id=None,username=username,password=password,email=email)
 
-        did_user_exist = Users.query.filter_by(email=email).first()
-        if did_user_exist:
-            flash('Email addres already exist!')
+        did_user_exist = Users.query.filter_by(username=username)
+        if did_user_exist.count() > 1:
+            flash('User already exist!')
             return render_template('register.html', form=form)
 
 
         db.session.add(user)
         db.session.commit()
 
-        return render_template('thanks.html')
+        return redirect(url_for('thanks'))
 
     return render_template('register.html', form=form)
 

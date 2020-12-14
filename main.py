@@ -49,10 +49,10 @@ def load_user(user_id):
     return Users.query.get(int(user_id))
 
 class AdTaskForm(FlaskForm):
-    title = StringField('Title', [validators.length(min=4, max=45)])
-    description = TextAreaField('Description', [validators.length(min=4, max=255)])
-    termDate = DateField('Date', format='%Y-%m-%d')
-    termTime = TimeField('Time', format='%H:%M:%S')
+    title = StringField('Title', [validators.length(min=4, max=45), validators.DataRequired()])
+    description = TextAreaField('Description', [validators.length(min=4, max=255), validators.DataRequired()])
+    termDate = DateField('Date', [validators.DataRequired()] , format='%Y-%m-%d')
+    termTime = TimeField('Time', [validators.DataRequired()], format='%H:%M:%S')
 
 @app.route('/')
 def index():
@@ -64,10 +64,8 @@ def index():
     return render_template('index.html', form=form)
 
 class LoginForm(FlaskForm):
-    username = StringField('Login')
-    password = PasswordField('Password', [
-        validators.DataRequired()
-    ])
+    username = StringField('Login', [validators.DataRequired()])
+    password = PasswordField('Password', [validators.DataRequired()])
 
 
 
@@ -105,8 +103,8 @@ def thanks():
 
 
 class RegisterForm(FlaskForm):
-    username = StringField('Username', [validators.length(min=4, max=25)])
-    email = StringField('Email', [validators.length(min=4, max=45)])
+    username = StringField('Username', [validators.length(min=4, max=25), validators.DataRequired()])
+    email = StringField('Email', [validators.length(min=4, max=45), validators.DataRequired()])
     password = PasswordField('Password', [
         validators.DataRequired()
     ])
@@ -147,15 +145,15 @@ def register():
 @login_required
 def addTask():
     form = AdTaskForm(request.form)
-    # try:
-    Task = TaskToDo(title=form.title.data, description=form.description.data, 
-    termDate=form.termDate.data, termTime=form.termTime.raw_data[0],
-    method=0, user_id=current_user.id, done=0)
-    db.session.add(Task)
-    db.session.commit()
-    return redirect(url_for('index'))
-    # except:
-        # return 'There was a problem with adding your task!'
+    try:
+        Task = TaskToDo(title=form.title.data, description=form.description.data, 
+        termDate=form.termDate.data, termTime=form.termTime.raw_data[0],
+        method=0, user_id=current_user.id, done=0)
+        db.session.add(Task)
+        db.session.commit()
+        return redirect(url_for('index'))
+    except:
+        return 'There was a problem with adding your task!'
 
 if __name__ == "__main__":
     app.run(debug=True)

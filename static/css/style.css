@@ -21,6 +21,19 @@ body{
     font-size: 300%;
 }
 
+a {
+    background-color: #4B8BBE;
+    color: #FFE873;
+    padding: 1em 1.5em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  a:hover{
+    background-color: #FFE873;
+    color: #4B8BBE; 
+  }
+
 #list{
     padding: 25px;
     display: flex;
@@ -30,7 +43,8 @@ body{
 }
 
 .task{
+    padding-bottom: 10px;
     width: 100%;
     text-align: left;
-    border: 2px solid black;
+    border-bottom: 2px solid black;
 }

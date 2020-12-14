@@ -3,6 +3,7 @@ from flask.globals import request
 from flask.helpers import flash
 from flask_login.mixins import UserMixin
 from flask_login.utils import login_required, logout_user
+from sqlalchemy.orm import query
 from wtforms import StringField, PasswordField, validators, BooleanField, SubmitField
 from wtforms.fields.html5 import DateField, TimeField
 from flask_sqlalchemy import SQLAlchemy
@@ -118,25 +119,29 @@ class RegisterForm(FlaskForm):
 @app.route('/register', methods=['GET','POST'])
 def register():
     form = RegisterForm(request.form)
+    error1 = ''
+    error2 = ''
+
     if form.validate_on_submit():
-        username = form.username.data
-        email = form.email.data
-        password = generate_password_hash(form.password.data, method='sha256')
+        query = Users.query.filter_by(username=form.username.data).first()
+        if query is None:
+            query = Users.query.filter_by(email=form.email.data).first()
+            if query is None:
 
-        user = Users(id=None,username=username,password=password,email=email)
+                username = form.username.data
+                email = form.email.data
+                password = generate_password_hash(form.password.data, method='sha256')
 
-        did_user_exist = Users.query.filter_by(username=username)
-        if did_user_exist.count() > 1:
-            flash('User already exist!')
-            return render_template('register.html', form=form)
+                db.session.add(Users(id=None,username=username,password=password,email=email))
+                db.session.commit()
 
+                return redirect(url_for('thanks'))
+            else:
+                error2 = "Someone is already using this email addres!"
+        else:
+            error1 = "There is user with this nick!"
 
-        db.session.add(user)
-        db.session.commit()
-
-        return redirect(url_for('thanks'))
-
-    return render_template('register.html', form=form)
+    return render_template('register.html', form=form, error1=error1, error2=error2)
 
 @app.route('/addTask', methods=['POST'])
 @login_required

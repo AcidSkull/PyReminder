@@ -9,11 +9,9 @@
         {{ form.csrf_token }}
 
         {{ form.username.label }}<br>{{ form.username() }} <br>
-        {% with message = get_flashed_message %}
-            {% if message %}
-            <span style="color:red">{{ message }}</span><br>
-            {% endif %}
-        {% endwith %}
+        {% if error1|length > 1 %}
+            <span style="color:red">{{ error1 }}</span><br>
+        {% endif %}
 
         {% if form.username.errors %}
             {% for error in form.username.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
@@ -22,6 +20,10 @@
         {{ form.email.label }}<br>{{ form.email() }} <br>
         {% if form.email.errors %}
             {% for error in form.email.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+        {% endif %}
+
+        {% if error2|length > 1 %}
+            <span style="color:red">{{ error2 }}</span><br>
         {% endif %}
         
         {{ form.password.label }}<br>{{ form.password() }} <br>
@@ -39,6 +41,6 @@
             {% for error in form.accepted_rules.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
         {% endif %}
         
-        {{ form.submit() }}>
+        {{ form.submit() }}
     </form>
 {% endblock %}

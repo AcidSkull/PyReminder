@@ -23,7 +23,7 @@
             {% else %}         
                 {% for task in tasks %}
                     <div class="task">
-                        <h4>{{ loop.index }}) {{ task.title }} &#10005;</h4>
+                        <h4><span>{{ loop.index }}) {{ task.title }}</span><span><a href="/deleteTask/{{ task.id }}">&#10005;</a></span></h4>
                         {{ task.description }} <br>
                         {{ task.termDate }} {{ task.termTime}}
                     </div>

@@ -149,11 +149,24 @@ def addTask():
         Task = TaskToDo(title=form.title.data, description=form.description.data, 
         termDate=form.termDate.data, termTime=form.termTime.raw_data[0],
         method=0, user_id=current_user.id, done=0)
+
         db.session.add(Task)
         db.session.commit()
         return redirect(url_for('index'))
     except:
         return 'There was a problem with adding your task!'
+
+@app.route('/deleteTask/<int:id>')
+@login_required
+def deleteTask(id):
+    Task = TaskToDo.query.get_or_404(id)
+
+    try:
+        db.session.delete(Task)
+        db.session.commit()
+        return redirect(url_for('index'))
+    except:
+        return 'There was a problem with deleting your task!'
 
 if __name__ == "__main__":
     app.run(debug=True)

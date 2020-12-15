@@ -1,46 +1,52 @@
 {% extends 'template.html' %}
 {% block head %}
     <title>Sign up now!</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style-forms.css') }}">
 {% endblock %}
 
 {% block body %}
-    <h2>Register</h2>
-    <form action="" method="post">
-        {{ form.csrf_token }}
+    <div id="form">
+        <ul class="tab-group">
+            <li class="tab"><a href="{{ url_for('register') }}">Sign Up</a></li>
+            <li class="tab active"><a href="{{ url_for('login') }}">Log In</a></li>
+        </ul>
+        <form action="" method="post">
+            {{ form.csrf_token }}
 
-        {{ form.username.label }}<br>{{ form.username() }} <br>
-        {% if error1|length > 1 %}
-            <span style="color:red">{{ error1 }}</span><br>
-        {% endif %}
+            {{ form.username.label }}<br>{{ form.username() }} <br>
+            {% if error1|length > 1 %}
+                <span style="color:red">{{ error1 }}</span><br>
+            {% endif %}
 
-        {% if form.username.errors %}
-            {% for error in form.username.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
-        {% endif %}
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+            {% endif %}
 
-        {{ form.email.label }}<br>{{ form.email() }} <br>
-        {% if form.email.errors %}
-            {% for error in form.email.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
-        {% endif %}
+            {{ form.email.label }}<br>{{ form.email() }} <br>
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+            {% endif %}
 
-        {% if error2|length > 1 %}
-            <span style="color:red">{{ error2 }}</span><br>
-        {% endif %}
-        
-        {{ form.password.label }}<br>{{ form.password() }} <br>
-        {% if form.password.errors %}
-            {% for error in form.password.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
-        {% endif %}
+            {% if error2|length > 1 %}
+                <span style="color:red">{{ error2 }}</span><br>
+            {% endif %}
+            
+            {{ form.password.label }}<br>{{ form.password() }} <br>
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+            {% endif %}
 
-        {{ form.confirm.label }}<br>{{ form.confirm() }} <br>
-        {% if form.confirm.errors %}
-            {% for error in form.confirm.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
-        {% endif %}
+            {{ form.confirm.label }}<br>{{ form.confirm() }} <br>
+            {% if form.confirm.errors %}
+                {% for error in form.confirm.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+            {% endif %}
 
-        {{ form.accepted_rules() }} {{ form.accepted_rules.label }}<br>
-        {% if form.accepted_rules.errors %}
-            {% for error in form.accepted_rules.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
-        {% endif %}
-        
-        {{ form.submit() }}
-    </form>
+            <label class="container">I accpeted the <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">terms of use</a>{{ form.accepted_rules() }}<span class="checkmark"></span></label><br>
+            {% if form.accepted_rules.errors %}
+                {% for error in form.accepted_rules.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+            {% endif %}
+            
+            {{ form.submit() }}
+        </form>
+    </div>
 {% endblock %}

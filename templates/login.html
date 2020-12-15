@@ -1,16 +1,22 @@
 {% extends 'template.html' %}
 {% block head %}
     <title>Sign in now!</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style-forms.css') }}">
 {% endblock %}
 
 {% block body %}
-    <h2>Login</h2>
-    <form method="post">
-        {{ form.username.label }}<br>{{ form.username() }} <br>
-        {{ form.password.label }}<br>{{ form.password() }} <br>
-        {% if error %}
-            <span style="color:red">{{ error }}</span> <br>
-        {% endif %}
-        <input type="submit" value="Sign in">
-    </form>
+    <div id="form">
+        <ul class="tab-group">
+            <li class="tab active"><a href="{{ url_for('register') }}">Sign Up</a></li>
+            <li class="tab"><a href="{{ url_for('login') }}">Log In</a></li>
+        </ul>
+        <form method="post">
+            {{ form.username.label }}<br>{{ form.username() }} <br>
+            {{ form.password.label }}<br>{{ form.password() }} <br>
+            {% if error %}
+                <span style="color:red">{{ error }}</span> <br>
+            {% endif %}
+            <input type="submit" value="Sign in">
+        </form>
+    </div>
 {% endblock %}

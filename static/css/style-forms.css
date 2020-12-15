@@ -1,0 +1,132 @@
+body{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+#form{
+    background: #143652;
+    color: white;
+    max-width: 600px;
+    padding: 40px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+input{
+    background-image:none;  
+    border: 1px #758694 solid;
+    font-size:22px;
+    display:block;
+    padding:5px 10px;
+    background:none;
+    color: white;
+    transition:background-color .25s ease;
+}
+
+input:focus {
+    background-color:#2d82c7;
+}
+
+input[type=submit]:hover{
+    background-color:#2d82c7;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(226, 255, 119);
+}
+
+.tab-group {
+    list-style:none;
+    padding:0;
+    margin:0 0 40px 0;
+}
+.tab-group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+li>a {
+    display:block;
+    text-decoration:none;
+    padding:15px;
+    background:#2d82c7;
+    color:rgb(226, 255, 119);
+    font-size:20px;
+    float:left;
+    width:38%;
+    text-align:center;
+    cursor:pointer;
+    transition:.5s ease;
+  }
+  
+li>a:hover {
+    background: #1286e6;
+}
+
+.active a {
+    background:#3b5e81;
+    color:white;
+}
+
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+  
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  .container input:checked ~ .checkmark {
+    background-color: #2196F3;
+  }
+  
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  .container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }

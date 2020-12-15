@@ -3,6 +3,8 @@
 
 body{
     background-color: #306998;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 #main{
@@ -13,7 +15,6 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: 'Roboto', sans-serif;
 }
 
 #logo{
@@ -21,7 +22,7 @@ body{
     font-size: 300%;
 }
 
-a {
+a.btn{
     background-color: #4B8BBE;
     color: #FFE873;
     padding: 1em 1.5em;
@@ -29,7 +30,7 @@ a {
     text-transform: uppercase;
   }
 
-  a:hover{
+  a.btn:hover{
     background-color: #FFE873;
     color: #4B8BBE; 
   }

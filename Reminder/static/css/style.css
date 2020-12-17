@@ -45,6 +45,7 @@ a.btn{
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .task{
@@ -52,6 +53,7 @@ a.btn{
     width: 100%;
     text-align: left;
     border-bottom: 2px solid black;
+    padding: 20px;
 }
 
 .task>h4{

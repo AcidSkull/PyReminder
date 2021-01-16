@@ -1,8 +1,12 @@
 {% extends 'template.html' %}
 {% block head %}
 <title>Congratulations!</title>
+<link rel="stylesheet" href="{{ url_for('static',filename='css/style-forms.css') }}">
 {% endblock %}
 
 {% block body %}
-Congratulations
+<div id="form">
+    Congratulations!
+    <a href="{{ url_for('index') }}">Return to home page</a>
+</div>
 {% endblock %}

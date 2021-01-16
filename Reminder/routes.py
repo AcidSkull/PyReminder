@@ -46,10 +46,6 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/thanks')
-def thanks():
-    return render_template('thanks.html')
-
 @app.route('/register', methods=['GET','POST'])
 def register():
     form = RegisterForm(request.form)
@@ -70,7 +66,7 @@ def register():
                 db.session.add(Users(id=None,username=username,password=password,email=email,phone_nr=phone_nr))
                 db.session.commit()
 
-                return redirect(url_for('thanks'))
+                return render_template('thanks.html')
             else:
                 error2 = "Someone is already using this email addres!"
         else:

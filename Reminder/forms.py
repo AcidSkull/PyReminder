@@ -21,7 +21,7 @@ class RegisterForm(FlaskForm):
     confirm = PasswordField('Confirm password', [
         validators.EqualTo('confirm', message='Passwords do not match')
     ])
-    phone_nr = TelField('Telephone number', [validators.DataRequired(), validators.length(min=12, max=12)])
+    phone_nr = TelField('Telephone number', [validators.DataRequired(), validators.length(min=12, max=12)], render_kw={'placeholder':'for eg.:+48756432543'})
     accepted_rules = BooleanField("I accpeted the terms of use",[validators.DataRequired()])
     submit = SubmitField('Sign up')
 

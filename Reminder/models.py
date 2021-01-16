@@ -22,11 +22,11 @@ class Users(UserMixin,db.Model):
         self.phone_nr = phone_nr
 
 class TaskToDo(db.Model):
-    __tablename__ = 'TaskToDo'
+    __tablename__ = 'Task_To_Do'
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(45), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     termDate = db.Column(db.String, nullable=False)
     termTime = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False)

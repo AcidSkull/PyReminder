@@ -24,12 +24,18 @@ input{
     transition:background-color .25s ease;
 }
 
-input:focus {
+input:focus,textarea:focus {
     background-color:#2d82c7;
 }
 
 input[type=submit]:hover{
     background-color:#2d82c7;
+}
+
+textarea{
+  resize: none;
+  background-color: rgb(168, 189, 192);
+  color: white;
 }
 
 a{

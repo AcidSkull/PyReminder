@@ -1,0 +1,37 @@
+#form{
+    background: #143652;
+    color: white;
+    max-width: 600px;
+    padding: 40px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+input{
+    background-image:none;  
+    border: 1px #758694 solid;
+    font-size:22px;
+    display:block;
+    padding:5px 10px;
+    background:none;
+    color: white;
+    transition:background-color .25s ease;
+}
+
+input:focus,textarea:focus {
+    background-color:#2d82c7;
+}
+
+input[type=submit]:hover{
+    background-color:#2d82c7;
+}
+
+textarea{
+  resize: none;
+  background-color: rgb(168, 189, 192);
+  color: white;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(226, 255, 119);
+}

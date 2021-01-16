@@ -4,7 +4,7 @@ from wtforms.fields.html5 import DateField, TimeField, TelField
 
 class AdTaskForm(FlaskForm):
     title = StringField('Title', [validators.length(min=4, max=45), validators.DataRequired()])
-    description = TextAreaField('Description', [validators.length(min=4, max=255), validators.DataRequired()])
+    description = TextAreaField('Description', [validators.length(min=4, max=255), validators.DataRequired()], render_kw={'row':50, 'cols':37})
     termDate = DateField('Date', [validators.DataRequired()] , format='%Y-%m-%d')
     termTime = TimeField('Time', [validators.DataRequired()], format='%H:%M:%S')
 

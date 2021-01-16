@@ -65,8 +65,9 @@ def register():
                 username = form.username.data
                 email = form.email.data
                 password = generate_password_hash(form.password.data, method='sha256')
+                phone_nr = form.phone_nr.data
 
-                db.session.add(Users(id=None,username=username,password=password,email=email))
+                db.session.add(Users(id=None,username=username,password=password,email=email,phone_nr=phone_nr))
                 db.session.commit()
 
                 return redirect(url_for('thanks'))
@@ -84,7 +85,7 @@ def addTask():
     try:
         Task = TaskToDo(title=form.title.data, description=form.description.data, 
         termDate=form.termDate.data, termTime=form.termTime.raw_data[0],
-        method=0, user_id=current_user.id, done=0)
+        user_id=current_user.id)
 
         db.session.add(Task)
         db.session.commit()

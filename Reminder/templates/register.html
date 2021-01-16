@@ -40,6 +40,11 @@
             {% if form.confirm.errors %}
                 {% for error in form.confirm.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
             {% endif %}
+            
+            {{ form.phone_nr.label }}<br>{{ form.phone_nr() }} <br>
+            {% if form.phone_nr.errors %}
+                {% for error in form.phone_nr.errors %}<span style="color:red">{{ error }}</span><br>{% endfor %}
+            {% endif %}
 
             <label class="container">I accpeted the <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">terms of use</a>{{ form.accepted_rules() }}<span class="checkmark"></span></label><br>
             {% if form.accepted_rules.errors %}

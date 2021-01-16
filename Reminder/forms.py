@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, validators, BooleanField, SubmitField, TextAreaField
-from wtforms.fields.html5 import DateField, TimeField
+from wtforms.fields.html5 import DateField, TimeField, TelField
 
 class AdTaskForm(FlaskForm):
     title = StringField('Title', [validators.length(min=4, max=45), validators.DataRequired()])
@@ -21,6 +21,7 @@ class RegisterForm(FlaskForm):
     confirm = PasswordField('Confirm password', [
         validators.EqualTo('confirm', message='Passwords do not match')
     ])
+    phone_nr = TelField('Telephone number', [validators.DataRequired(), validators.length(min=12, max=12)])
     accepted_rules = BooleanField("I accpeted the terms of use",[validators.DataRequired()])
     submit = SubmitField('Sign up')
 

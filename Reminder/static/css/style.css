@@ -20,6 +20,10 @@ body{
 #logo{
     font-family: 'Goldman', cursive;
     font-size: 300%;
+    background-color: rgb(148, 164, 167);
+    width: 100%;
+    text-align: center;
+    border-bottom: rgb(0, 0, 0) solid 3px;
 }
 
 a{
@@ -40,7 +44,6 @@ a.btn{
   }
 
 #list{
-    padding: 25px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -62,9 +65,117 @@ a.btn{
 }
 
 .task>h4>span{
-    width: 50%;
+    width: 90%;
 }
 
 .task>h4>span:last-child{
-    text-align: right;
+    display: flex;
+    width: 10%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.task>h4>span:last-child>img{
+    cursor: pointer;
+}
+
+#navbar{
+    width: 100%;
+    background-color: rgb(140, 150, 151);
+    border-bottom: black solid 3px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+}
+
+#navbar img{
+    height: 2%;
+}
+
+#napis{
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    font-size: 2rem;
+}
+
+#buttons{
+    height: 100%;
+    width: 50%;
+    text-align: end;
+    padding-right: 10%;
+}
+
+#buttons img{
+    height: 64px;
+}
+
+.accordion {
+    background-color: rgb(140, 150, 151);
+    color: black;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    font-size: 2rem;
+    border-bottom: black solid 3px;
+  }
+  
+  .active, .accordion:hover {
+    background-color: #ccc;
+  }
+  
+  .accordion:after {
+    content: '\02795';
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .accordion .active:after {
+    content: "\2796"; 
+  }
+
+  .panel{
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+  }
+
+  #form-task{
+      margin-left: 25px;
+  }
+
+  #nothing{
+      font-size: 2rem;
+      width: 100%;
+      text-align: center;
+  }
+
+  #settings{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      height: 50%;
+  }
+
+.setting_button{
+    position: relative;
+    background-color: #4B8BBE;
+    border: none;
+    color: #FFE873;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 18px;
+    margin: 4px 2px;
+    transition: 0.3s;
+    }
+
+.setting_button:hover{
+    background-color: #FFE873;
+    color: #4B8BBE;
 }

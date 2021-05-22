@@ -11,6 +11,7 @@ scheduler = APScheduler()
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 
+# Twilio variables
 Sid = os.getenv('TWILIO_ACCOUNT_SID')
 Api_key = os.getenv('TWILIO_API_KEY')
 Number = os.getenv('TWILIO_NUMBER')

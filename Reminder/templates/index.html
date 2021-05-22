@@ -9,8 +9,24 @@
     <div id="main">
     <div id="logo"><h1><span style="color: #FFE873">Py</span><span style="color:#4B8BBE">Reminder</span></h1></div>
     {% if current_user.is_authenticated %}
-        Welcome {{ current_user.username }}! 
-        <a href="{{ url_for('logout') }}">Logout</a> <br>
+        <div id="navbar">
+         <div id="napis">
+            Welcome {{ current_user.username }}!
+        </div>
+        <div id="buttons">
+            <a href="{{ url_for('logout') }}"><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout"></a> 
+        </div>
+        </div>
+        <button class="accordion">Settings</button>
+        <div class="panel" id="settings">
+            <a href="{{ url_for('change_pass') }}" class="setting_button">Change Password</a>
+            <a href="{{ url_for('change_email') }}" class="setting_button">Change E-mail</a>
+            <a href="{{ url_for('change_number') }}" class="setting_button">Chaange Phone Number</a>
+            <a href="{{ url_for('change_nick') }}" class="setting_button">Change Nickname</a>
+            <a href="{{ url_for('delte_account') }}" class="setting_button">Delete Account</a>
+        </div>
+        <button class="accordion">Add Task</button>
+        <div class="panel" id="form-task">
         <form action="{{ url_for('addTask') }}" method="post">
             {{ form.title.label }}<br>{{ form.title() }} <br>
             {{ form.description.label }}<br>{{ form.description() }} <br>
@@ -18,19 +34,24 @@
             {{ form.termTime.label }}<br>{{ form.termTime() }} <br>
             <input type="submit" value="Add Task">
         </form>
-        <div id="list">
+        </div>
+        <button class="accordion active">Tasks</button>
+        <div id="list" class="panel">
             {% if tasks.count() == 0 %}
-                There's nothing to remind you.
+                <div id="nothing">
+                    There's nothing to remind you.
+                </div>
             {% else %}         
                 {% for task in tasks %}
                     <div class="task">
-                        <h4><span>{{ loop.index }}) {{ task.title }}</span><span><a href="/deleteTask/{{ task.id }}">&#10005;</a></span></h4>
+                        <h4><span>{{ loop.index }}) {{ task.title }}</span><span><img src="{{ url_for('static', filename='images/edit-box.png') }}" alt="edit task" height="16px"><a href="/deleteTask/{{ task.id }}">&#10005;</a></span></h4>
                         {{ task.description }} <br>
                         {{ task.termDate }} {{ task.termTime}}
                     </div>
                 {% endfor %}
             {% endif %}
         </div>
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     {% else %}
     <div id="main">
         PyReminder is a tool that's allow you to never forget about your's important plans. <br> <br>

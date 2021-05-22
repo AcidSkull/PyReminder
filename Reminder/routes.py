@@ -4,19 +4,19 @@ from flask_login.utils import login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, login_user, current_user
 from Reminder.models import Users, TaskToDo
-from Reminder.forms import LoginForm, RegisterForm, AdTaskForm
+from Reminder.forms import LoginForm, RegisterForm, AdTaskForm, ChangePassword, ChangePhoneNumber
 from Reminder import app, db
 
 
 
 @app.route('/')
 def index():
-    form = AdTaskForm()
+    form1 = AdTaskForm()
     if current_user.is_authenticated:
         query = TaskToDo.query.filter_by(user_id=current_user.id)
-        return render_template('index.html', form=form, tasks=query)
+        return render_template('index.html', form=form1, tasks=query)
 
-    return render_template('index.html', form=form)
+    return render_template('index.html')
 
 @app.route('/login',methods=['GET','POST'])
 def login():
@@ -100,3 +100,28 @@ def deleteTask(id):
         return redirect(url_for('index'))
     except:
         return 'There was a problem with deleting your task!'
+
+@app.route('/change_pass')
+@login_required
+def change_pass():
+    return '1'
+
+@app.route('/change_email')
+@login_required
+def change_email():
+    return '2'
+
+@app.route('/change_number')
+@login_required
+def change_number():
+    return '3'
+
+@app.route('/change_nick')
+@login_required
+def change_nick():
+    return '4'
+
+@app.route('/delte_account')
+@login_required
+def delte_account():
+    return '5'

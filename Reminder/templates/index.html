@@ -18,12 +18,12 @@
         </div>
         </div>
         <button class="accordion">Settings</button>
-        <div class="panel" id="settings">
-            <a href="{{ url_for('change_pass') }}" class="setting_button">Change Password</a>
-            <a href="{{ url_for('change_email') }}" class="setting_button">Change E-mail</a>
-            <a href="{{ url_for('change_number') }}" class="setting_button">Chaange Phone Number</a>
-            <a href="{{ url_for('change_nick') }}" class="setting_button">Change Nickname</a>
-            <a href="{{ url_for('delte_account') }}" class="setting_button">Delete Account</a>
+        <div class="panel" style="width: 70%;"> 
+            <div id="settings">
+                <button class="setting_button" onclick="openForm()">CHANGE PASSWOD</button>
+                <button class="setting_button" onclick="openForm()">CHANGE PHONE NUMBER</button>
+                <button class="setting_button" onclick="openForm()">CHANGE NICKNAME</button>
+                <button class="setting_button" onclick="openForm()">CHANGE ACCOUNT</button> </div>
         </div>
         <button class="accordion">Add Task</button>
         <div class="panel" id="form-task">
@@ -51,6 +51,15 @@
                 {% endfor %}
             {% endif %}
         </div>
+    </div>
+        <div id="popup">
+            <form action="">
+                <input type="text">
+                <input type="number" name="" id="">
+            </form>
+        </div>
+        
+        <div id="black_screen"></div>
         <script src="{{ url_for('static', filename='js/app.js') }}"></script>
     {% else %}
     <div id="main">

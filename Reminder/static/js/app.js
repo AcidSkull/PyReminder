@@ -1,7 +1,7 @@
 let accordion = document.getElementsByClassName("accordion");
 
 for (i = 0; i < accordion.length; i++) {
-    accordion[i].addEventListener("click", function() {
+    accordion[i].addEventListener("click",function(){
         this.classList.toggle("active");
         
         let p = this.nextElementSibling;
@@ -18,3 +18,16 @@ for (i = 0; i < accordion.length; i++) {
 
 let p = document.getElementsByClassName('panel');
 p[2].style.maxHeight = p[2].scrollHeight + "px";
+
+let black_screen = document.getElementById('black_screen');
+let popup = document.getElementById('popup');
+
+function openForm(){
+    popup.style.display = 'flex';
+    black_screen.classList.add('active');
+}
+
+black_screen.addEventListener('click', ()=>{
+    popup.style.display = 'none';
+    black_screen.classList.remove('active');
+});

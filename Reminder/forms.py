@@ -37,3 +37,6 @@ class ChangePhoneNumber(FlaskForm):
     newNumber = TelField('New Telephone Number', [validators.DataRequired(), 
                 validators.Regexp('^[+][0-9]{11}$', message='Wrong phone number syntax!')],
                 render_kw={'placeholder':'for eg.:+48756432543'})
+
+class ChangeNickname(FlaskForm):
+    NewUsername = StringField('Username', [validators.length(min=4, max=25), validators.DataRequired()])

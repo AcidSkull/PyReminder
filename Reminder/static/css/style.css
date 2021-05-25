@@ -107,7 +107,8 @@ a.btn{
 }
 
 #buttons img{
-    height: 64px;
+    height: 60px;
+    padding: 5px;
 }
 
 .accordion {
@@ -157,10 +158,9 @@ a.btn{
   }
 
   #settings{
-      width: 100%;
       display: flex;
       justify-content: center;
-      height: 50%;
+      flex-direction: column;
   }
 
 .setting_button{
@@ -178,4 +178,38 @@ a.btn{
 .setting_button:hover{
     background-color: #FFE873;
     color: #4B8BBE;
+}
+
+#popup{
+  display: none; 
+  position: fixed;
+  width: 25%;
+  top: 50%;
+  left: calc(37.5% - 46px);
+  background-color: rgb(140, 150, 151);
+  border: black solid 3px;
+  color: #FFE873;
+  padding: 16px 20px;
+  justify-content: center;
+}
+
+#popup>input,label{
+    width: 80%;
+}
+
+#black_screen{
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: none;
+}
+
+#black_screen.active{
+    opacity: 1;
+    pointer-events: all;
 }

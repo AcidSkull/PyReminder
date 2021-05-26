@@ -94,6 +94,8 @@ def addTask():
 def deleteTask(id):
     Task = TaskToDo.query.get_or_404(id)
 
+    if Task.user_id != int(current_user.get_id()):return redirect(url_for('index'))
+
     try:
         db.session.delete(Task)
         db.session.commit()

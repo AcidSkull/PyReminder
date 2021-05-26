@@ -1,70 +1,114 @@
-{% extends 'template.html' %}
-
-{% block head %}
-    <title>PyReminder</title>
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/style-forms-2.css') }}">
-{% endblock %}
-
-{% block body %}
-    <div id="main">
-    <div id="logo"><h1><span style="color: #FFE873">Py</span><span style="color:#4B8BBE">Reminder</span></h1></div>
-    {% if current_user.is_authenticated %}
-        <div id="navbar">
-         <div id="napis">
-            Welcome {{ current_user.username }}!
-        </div>
-        <div id="buttons">
-            <a href="{{ url_for('logout') }}"><img src="{{ url_for('static', filename='images/logout.png') }}" alt="logout"></a> 
-        </div>
-        </div>
-        <button class="accordion">Settings</button>
-        <div class="panel" style="width: 70%;"> 
-            <div id="settings">
-                <button class="setting_button" onclick="openForm()">CHANGE PASSWOD</button>
-                <button class="setting_button" onclick="openForm()">CHANGE PHONE NUMBER</button>
-                <button class="setting_button" onclick="openForm()">CHANGE NICKNAME</button>
-                <button class="setting_button" onclick="openForm()">CHANGE ACCOUNT</button> </div>
-        </div>
-        <button class="accordion">Add Task</button>
-        <div class="panel" id="form-task">
-        <form action="{{ url_for('addTask') }}" method="post">
-            {{ form.title.label }}<br>{{ form.title() }} <br>
-            {{ form.description.label }}<br>{{ form.description() }} <br>
-            {{ form.termDate.label }}<br>{{ form.termDate() }} <br>
-            {{ form.termTime.label }}<br>{{ form.termTime() }} <br>
-            <input type="submit" value="Add Task">
-        </form>
-        </div>
-        <button class="accordion active">Tasks</button>
-        <div id="list" class="panel">
-            {% if tasks.count() == 0 %}
-                <div id="nothing">
-                    There's nothing to remind you.
-                </div>
-            {% else %}         
-                {% for task in tasks %}
-                    <div class="task">
-                        <h4><span>{{ loop.index }}) {{ task.title }}</span><span><img src="{{ url_for('static', filename='images/edit-box.png') }}" alt="edit task" height="16px"><a href="/deleteTask/{{ task.id }}">&#10005;</a></span></h4>
-                        {{ task.description }} <br>
-                        {{ task.termDate }} {{ task.termTime}}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
+{% extends 'template.html' %} {% block head %}
+<title>PyReminder</title>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static',filename='css/style-forms-2.css') }}"
+/>
+{% endblock %} {% block body %}
+<div id="main">
+  <div id="logo">
+    <h1>
+      <span style="color: #ffe873">Py</span
+      ><span style="color: #4b8bbe">Reminder</span>
+    </h1>
+  </div>
+  {% if current_user.is_authenticated %}
+  <div id="navbar">
+    <div id="napis">Welcome {{ current_user.username }}!</div>
+    <div id="buttons">
+      <a href="{{ url_for('logout') }}"
+        ><img
+          src="{{ url_for('static', filename='images/logout.png') }}"
+          alt="logout"
+      /></a>
     </div>
-        <div id="popup">
-            <form action="">
-                <input type="text">
-                <input type="number" name="" id="">
-            </form>
-        </div>
-        
-        <div id="black_screen"></div>
-        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-    {% else %}
-    <div id="main">
-        PyReminder is a tool that's allow you to never forget about your's important plans. <br> <br>
-        <p><a href="{{ url_for('register') }}" class="btn">Sign up</a> <a href="{{ url_for('login') }}" class="btn">Sign in</a></p>
+  </div>
+  <button class="accordion">Settings</button>
+  <div class="panel" style="width: 70%">
+    <div id="settings">
+      <button class="setting_button" onclick="openForm(popup_form[0])">
+        CHANGE PASSWOD
+      </button>
+      <button class="setting_button" onclick="openForm(popup_form[1])">
+        CHANGE PHONE NUMBER
+      </button>
+      <button class="setting_button" onclick="openForm(popup_form[2])">
+        CHANGE NICKNAME
+      </button>
+      <button class="setting_button" onclick="openForm(popup_form[3])">
+        CHANGE ACCOUNT
+      </button>
     </div>
-    {% endif %}
-{% endblock %}
+  </div>
+  <button class="accordion">Add Task</button>
+  <div class="panel" id="form-task">
+    <form action="{{ url_for('addTask') }}" method="post">
+      {{ form[0].title.label }}<br />{{ form[0].title() }} <br />
+      {{ form[0].description.label }}<br />{{ form[0].description() }} <br />
+      {{ form[0].termDate.label }}<br />{{ form[0].termDate() }} <br />
+      {{ form[0].termTime.label }}<br />{{ form[0].termTime() }} <br />
+      <input type="submit" value="Add Task" />
+    </form>
+  </div>
+  <button class="accordion active">Tasks</button>
+  <div id="list" class="panel">
+    {% if tasks.count() == 0 %}
+    <div id="nothing">There's nothing to remind you.</div>
+    {% else %} {% for task in tasks %}
+    <div class="task">
+      <h4>
+        <span>{{ loop.index }}) {{ task.title }}</span
+        ><span
+          ><img
+            src="{{ url_for('static', filename='images/edit-box.png') }}"
+            alt="edit task"
+            height="16px"
+          /><a href="/deleteTask/{{ task.id }}">&#10005;</a></span
+        >
+      </h4>
+      {{ task.description }} <br />
+      {{ task.termDate }} {{ task.termTime}}
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+</div>
+<div id="popup">
+  <form action="" class="popup_form">
+    {{ form[1].oldPassword.label }} <br>
+    {{ form[1].oldPassword() }} <br>
+    {{ form[1].newPassword.label }} <br>
+    {{ form[1].newPassword() }} <br>
+    <input type="submit" value="CHANGE">
+  </form>
+  <form action="" method="post" class="popup_form">
+    {{ form[2].oldNumber.label }} <br>
+    {{ form[2].oldNumber() }} <br>
+    {{ form[2].newNumber.label }} <br>
+    {{ form[2].newNumber() }} <br>
+    <input type="submit" value="CHANGE">
+  </form>
+  <form action="" method="post" class="popup_form">
+    {{ form[3].NewUsername.label }} <br>
+    {{ form[3].NewUsername() }} <br>
+    <input type="submit" value="CHANGE">
+  </form>
+  <form action="" method="post" class="popup_form">
+    {{ form[4].password.label }} <br>
+    {{ form[4].password() }} <br>
+    <input type="submit" value="DELETE" style="background-color: red;">
+  </form>
+</div>
+
+<div id="black_screen"></div>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% else %}
+<div id="main">
+  PyReminder is a tool that's allow you to never forget about your's important
+  plans. <br />
+  <br />
+  <p>
+    <a href="{{ url_for('register') }}" class="btn">Sign up</a>
+    <a href="{{ url_for('login') }}" class="btn">Sign in</a>
+  </p>
+</div>
+{% endif %} {% endblock %}

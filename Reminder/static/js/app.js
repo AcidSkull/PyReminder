@@ -21,13 +21,19 @@ p[2].style.maxHeight = p[2].scrollHeight + "px";
 
 let black_screen = document.getElementById('black_screen');
 let popup = document.getElementById('popup');
+let setting_button = document.getElementsByClassName('setting_button');
+let popup_form = document.getElementsByClassName('popup_form');
 
-function openForm(){
+function openForm( form ){
     popup.style.display = 'flex';
     black_screen.classList.add('active');
+    form.style.display = 'block';
 }
 
 black_screen.addEventListener('click', ()=>{
     popup.style.display = 'none';
     black_screen.classList.remove('active');
+    for(i = 0;i < popup_form.length; i++){
+        popup_form[i].style.display = 'none';
+    }
 });

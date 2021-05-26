@@ -40,3 +40,6 @@ class ChangePhoneNumber(FlaskForm):
 
 class ChangeNickname(FlaskForm):
     NewUsername = StringField('Username', [validators.length(min=4, max=25), validators.DataRequired()])
+
+class DeleteAccount(FlaskForm):
+    password = PasswordField('Confirm your password', [validators.DataRequired()])

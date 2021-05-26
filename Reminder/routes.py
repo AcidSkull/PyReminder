@@ -4,17 +4,17 @@ from flask_login.utils import login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, login_user, current_user
 from Reminder.models import Users, TaskToDo
-from Reminder.forms import LoginForm, RegisterForm, AdTaskForm, ChangePassword, ChangePhoneNumber
+from Reminder.forms import LoginForm, RegisterForm, AdTaskForm, ChangePassword, ChangePhoneNumber, ChangeNickname, DeleteAccount
 from Reminder import app, db
 
 
 
 @app.route('/')
 def index():
-    form1 = AdTaskForm()
+    form = [AdTaskForm(), ChangePassword(), ChangePhoneNumber(), ChangeNickname(), DeleteAccount()]
     if current_user.is_authenticated:
         query = TaskToDo.query.filter_by(user_id=current_user.id)
-        return render_template('index.html', form=form1, tasks=query)
+        return render_template('index.html', form=form, tasks=query)
 
     return render_template('index.html')
 

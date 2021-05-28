@@ -1,5 +1,5 @@
-from flask import render_template, redirect, url_for
-from flask.globals import request
+from flask import render_template, redirect, url_for, Markup
+from flask.globals import request, session
 from flask_login.utils import login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, login_user, current_user
@@ -66,7 +66,7 @@ def register():
                 db.session.add(Users(id=None,username=username,password=password,email=email,phone_nr=phone_nr))
                 db.session.commit()
 
-                return render_template('thanks.html')
+                return render_template('thanks.html', message=Markup("Congratulations! <br> You succesfully registered! <br><a href=\"/\">Return to home page</a>"))
             else:
                 error2 = "Someone is already using this email addres!"
         else:
@@ -103,27 +103,35 @@ def deleteTask(id):
     except:
         return 'There was a problem with deleting your task!'
 
-@app.route('/change_pass')
+@app.route('/settings', methods=['POST'])
 @login_required
-def change_pass():
-    return '1'
+def settings():
+    post = request.form
+    User = Users.query.get_or_404(int(current_user.get_id()))
 
-@app.route('/change_email')
-@login_required
-def change_email():
-    return '2'
+    if 'newPassword' in post:
+        if check_password_hash(User.password, post['oldPassword']):
+            User.password = generate_password_hash(post['newPassword'], method='sha256')
+            db.session.commit()
+            return render_template('thanks.html', message='Password changed succesfully!')
+        else:
+            return render_template('thanks.html', message='Password is incorrect!')
+    elif 'newNumber' in post:
+        if User.phone_nr == post['oldNumber']:
+            User.phone_nr = post['newNumber']
+            db.session.commit()
+            return render_template('thanks.html', message='Phone number changed succesfully!')
+        else:
+            return render_template('thanks.html', message='Phone number is incorrect!')
+    elif 'NewUsername' in post:
+        User.username = post['NewUsername']
+        db.session.commit()
+        return render_template('thanks.html', message='Username changed succesfully!')
+    elif 'password' in post:
+        if check_password_hash(User.password, post['password']):
+            db.session.delete(User)
+            db.session.commit()
+            
+        return redirect(url_for('index'))
 
-@app.route('/change_number')
-@login_required
-def change_number():
-    return '3'
-
-@app.route('/change_nick')
-@login_required
-def change_nick():
-    return '4'
-
-@app.route('/delte_account')
-@login_required
-def delte_account():
-    return '5'
+    return redirect(url_for('index'))

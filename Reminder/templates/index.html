@@ -36,7 +36,7 @@
         CHANGE NICKNAME
       </button>
       <button class="setting_button" onclick="openForm(popup_form[3])">
-        CHANGE ACCOUNT
+        DELETE ACCOUNT
       </button>
     </div>
   </div>
@@ -73,26 +73,26 @@
   </div>
 </div>
 <div id="popup">
-  <form action="" class="popup_form">
+  <form action="{{ url_for('settings') }}" method="post" class="popup_form" target="_blank">
     {{ form[1].oldPassword.label }} <br>
     {{ form[1].oldPassword() }} <br>
     {{ form[1].newPassword.label }} <br>
     {{ form[1].newPassword() }} <br>
     <input type="submit" value="CHANGE">
   </form>
-  <form action="" method="post" class="popup_form">
+  <form action="{{ url_for('settings') }}" method="post" class="popup_form" target="_blank">
     {{ form[2].oldNumber.label }} <br>
     {{ form[2].oldNumber() }} <br>
     {{ form[2].newNumber.label }} <br>
     {{ form[2].newNumber() }} <br>
     <input type="submit" value="CHANGE">
   </form>
-  <form action="" method="post" class="popup_form">
+  <form action="{{ url_for('settings') }}" method="post" class="popup_form" target="_blank">
     {{ form[3].NewUsername.label }} <br>
     {{ form[3].NewUsername() }} <br>
     <input type="submit" value="CHANGE">
   </form>
-  <form action="" method="post" class="popup_form">
+  <form action="{{ url_for('settings') }}" method="post" class="popup_form">
     {{ form[4].password.label }} <br>
     {{ form[4].password() }} <br>
     <input type="submit" value="DELETE" style="background-color: red;">

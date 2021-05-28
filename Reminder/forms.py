@@ -8,7 +8,7 @@ class AdTaskForm(FlaskForm):
     title = StringField('Title', [validators.length(min=4, max=45), validators.DataRequired()])
     description = TextAreaField('Description', [validators.length(min=4, max=255), validators.DataRequired()], render_kw={'row':50, 'cols':37})
     termDate = DateField('Date', [validators.DataRequired()] , format='%Y-%m-%d', default=datetime.datetime.today())
-    termTime = TimeField('Time', [validators.DataRequired()], format='%H:%M:%S')
+    termTime = TimeField('Time', [validators.DataRequired()], format='%H:%M')
 
 class LoginForm(FlaskForm):
     username = StringField('Login', [validators.DataRequired()])

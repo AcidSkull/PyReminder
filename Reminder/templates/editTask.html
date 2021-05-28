@@ -1,0 +1,19 @@
+{% extends 'template.html' %}
+{% block head %}
+<title>Edit Task</title>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static',filename='css/style-forms.css') }}"
+/>
+{% endblock %}
+{% block body %}
+<div id="form">
+    <form method="post">
+    {{ form.title.label }}<br />{{ form.title() }} <br />
+    {{ form.description.label }}<br />{{ form.description() }} <br />
+    {{ form.termDate.label }}<br />{{ form.termDate() }} <br />
+    {{ form.termTime.label }}<br />{{ form.termTime() }} <br />
+    <input type="submit" value="CHANGE TASK">
+    </form>
+</div>
+{% endblock %}

@@ -57,13 +57,11 @@
     {% else %} {% for task in tasks %}
     <div class="task">
       <h4>
-        <span>{{ loop.index }}) {{ task.title }}</span
-        ><span
-          ><img
+        <span>{{ loop.index }}) {{ task.title }}</span><span>
+          <a href="/editTask/{{ task.id }}" target="_blank"><img
             src="{{ url_for('static', filename='images/edit-box.png') }}"
-            alt="edit task"
-            height="16px"
-          /><a href="/deleteTask/{{ task.id }}">&#10005;</a></span
+            alt="edit task"height="16px" class="edit"></a>
+            <a href="/deleteTask/{{ task.id }}">&#10005;</a></span
         >
       </h4>
       {{ task.description }} <br />

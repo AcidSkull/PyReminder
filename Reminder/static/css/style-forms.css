@@ -11,6 +11,8 @@ body{
     max-width: 600px;
     padding: 40px;
     box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+    position: fixed;
+    top: calc(50% - 90px);
 }
 
 input{
@@ -34,7 +36,7 @@ input[type=submit]:hover{
 
 textarea{
   resize: none;
-  background-color: rgb(168, 189, 192);
+  background-color: #143652;
   color: white;
 }
 

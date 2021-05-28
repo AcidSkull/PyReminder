@@ -1,11 +1,13 @@
+from email import message
 from flask import render_template, redirect, url_for, Markup
 from flask.globals import request, session
 from flask_login.utils import login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import LoginManager, login_user, current_user
+from flask_login import login_user, current_user
 from Reminder.models import Users, TaskToDo
 from Reminder.forms import LoginForm, RegisterForm, AdTaskForm, ChangePassword, ChangePhoneNumber, ChangeNickname, DeleteAccount
 from Reminder import app, db
+from datetime import datetime
 
 
 
@@ -129,9 +131,35 @@ def settings():
         return render_template('thanks.html', message='Username changed succesfully!')
     elif 'password' in post:
         if check_password_hash(User.password, post['password']):
+            db.session.query(TaskToDo).filter_by(user_id=User.id).delete()
             db.session.delete(User)
             db.session.commit()
             
         return redirect(url_for('index'))
 
     return redirect(url_for('index'))
+
+@app.route('/editTask/<int:id>', methods=['GET','POST'])
+def editTask(id):
+    task = TaskToDo.query.get_or_404(id)
+
+    if task.user_id != Users.query.get_or_404(int(current_user.get_id())).id:
+        return render_template('thanks.html', message='It\'s not your task silly.')
+
+    if request.method == 'POST':
+        form = AdTaskForm(request.form)
+
+        task.title = form.title.data
+        task.description = form.description.data
+        task.termDate = form.termDate.data
+        task.termTime = form.termTime.raw_data[0]
+
+        db.session.commit()
+        return render_template('thanks.html', message='Task succesfully changed!')
+
+
+    
+    return render_template('editTask.html',form=AdTaskForm(
+        title=task.title, description=task.description, 
+        termDate=datetime.strptime(task.termDate, '%Y-%m-%d'), termTime=datetime.strptime(task.termTime, '%H:%M')
+    ))

@@ -35,3 +35,9 @@ a{
     text-decoration: none;
     color: rgb(226, 255, 119);
 }
+
+@media (max-width: 600px){
+    input{
+        padding: 5px 0px;
+    }
+}

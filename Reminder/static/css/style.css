@@ -14,6 +14,12 @@ body {
   max-height: auto;
   display: flex;
   flex-direction: column;
+}
+
+#main_text{
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
@@ -80,16 +86,11 @@ a.btn:hover {
 }
 
 #navbar {
-  width: 100%;
   background-color: rgb(140, 150, 151);
   border-bottom: black solid 3px;
   display: flex;
   align-items: center;
   padding: 2px;
-}
-
-#navbar img {
-  height: 2%;
 }
 
 #napis {
@@ -146,6 +147,8 @@ a.btn:hover {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #form-task {
@@ -191,15 +194,14 @@ a.btn:hover {
   background-color: rgb(140, 150, 151);
   border: black solid 3px;
   color: #ffe873;
-  padding: 16px 20px;
+  padding: 16px 20px; 
   justify-content: center;
   z-index: 3;
-  flex-direction: column;
 }
 
 #popup > input,
 label {
-  width: 80%;
+  width: 100%;
 }
 
 #popup > form{
@@ -223,4 +225,35 @@ label {
 #black_screen.active {
   opacity: 1;
   pointer-events: all;
+}
+
+@media (max-width: 600px){
+  body{
+    max-height: 100vh;
+  }
+
+  #main{
+    margin: 0;
+  }
+
+  #logo{
+    font-size: x-large;
+  }
+
+  .task > h4 > span {
+    width: 80%;
+  }
+  
+  .task > h4 > span:last-child {
+    width: 20%;
+  }
+
+  #buttons img{
+    height: 40px;
+  }
+
+  #popup{
+    width: 68%;
+    left: 10%;
+  }
 }

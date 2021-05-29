@@ -8,11 +8,11 @@ body{
 #form{
     background: #143652;
     color: white;
-    max-width: 600px;
+    width: calc(25%-40px);
     padding: 40px;
     box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
     position: fixed;
-    top: calc(50% - 90px);
+    top: calc(35% - 90px);
 }
 
 input{
@@ -137,4 +137,19 @@ li>a:hover {
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+  }
+
+  .register{
+    top: 10% !important;
+  }
+
+  @media (max-width: 600px){
+    #form{
+      top: 20%;
+    }
+
+    .register{
+      top: 0;
+      position: static !important;
+    }
   }

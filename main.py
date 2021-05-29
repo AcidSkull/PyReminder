@@ -33,4 +33,4 @@ def check_tasks(c, number):
 if __name__ == "__main__":
     scheduler.add_job(id='check_tasks', func=check_tasks, trigger='interval', seconds=60, args=(client,Number))
     scheduler.start()
-    app.run(debug=True, use_reloader=False)
+    app.run(debug=True, use_reloader=False, host='0.0.0.0')
